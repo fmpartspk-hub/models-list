@@ -38,7 +38,12 @@ else:
         results = df[df[col_compatible].astype(str).str.contains(query, case=False, na=False)]
         if not results.empty:
             st.success(f"✅ Found {len(results)} matching records.")
-            st.write("### Compatible Original Models:")
-            st.table(results[[col_models]].drop_duplicates().reset_index(drop=True))
+            st.write("### Matching Records:")
+            # Show both model and compatible columns with nicer formatting
+            st.dataframe(
+                results[[col_models, col_compatible]].reset_index(drop=True),
+                use_container_width=True
+            )
         else:
             st.error("❌ No matching model found.")
+
